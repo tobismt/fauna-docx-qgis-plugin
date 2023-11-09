@@ -12,7 +12,7 @@ class roteListePflanzen:
         self.pflanzen_layer = QgsProject.instance().mapLayersByName(pflanzen_layer_name)[0]
         self.outpath = outpath
         self.basepath = os.path.dirname(os.path.realpath(__file__))
-        self.LUT = pd.read_csv(f"{self.basepath}/Datentabelle_RL_Farn-_und_Bluetenpflanzen_2018_Deutschland.csv", sep='|')
+        self.LUT = pd.read_csv(f"{self.basepath}/flora.csv", sep='|')
         self.doc = docx.Document()
         
         self.get_arten_list(self.pflanzen_layer)
