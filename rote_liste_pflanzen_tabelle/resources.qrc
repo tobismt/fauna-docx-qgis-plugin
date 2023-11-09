@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/rote_liste_pflanzen_tabelle" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
