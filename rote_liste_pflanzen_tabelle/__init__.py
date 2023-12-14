@@ -32,5 +32,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     :type iface: QgsInterface
     """
     #
-    from .rote_liste_pflanzen_tabelle import RoteListePflanzenTabelle
-    return RoteListePflanzenTabelle(iface)
+    from .red_list_fauna_table import RedListFaunaTable
+    return RedListFaunaTable(iface)
