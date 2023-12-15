@@ -12,6 +12,7 @@ class redListFauna:
         self.outpath = outpath
         self.basepath = os.path.dirname(os.path.realpath(__file__))
         self.LUT = pd.read_csv(f"{self.basepath}/fauna.csv", sep='|')
+        self.legend = pd.read_csv(f"{self.basepath}/legend.csv", sep='|')
         self.doc = docx.Document()
         
         self.get_arten_list(self.fauna_layer)
@@ -20,6 +21,7 @@ class redListFauna:
         self.df_to_word()
         self.color_cells(self.doc.tables[0])
         self.center_text()
+        self.create_legend()
         self.save()
         
     def add_header(self):
@@ -41,7 +43,6 @@ class redListFauna:
         
         list = df.Name.unique()
         self.list = list
-        print(list)
 
 
     def create_df(self):
@@ -110,6 +111,28 @@ class redListFauna:
                     num += 1
 
     def create_legend(self):
+        self.doc.add_paragraph('')
+        t = self.doc.add_table(self.legend.shape[0] + 1, self.legend.shape[1])
+        for j in range(self.legend.shape[-1]):
+            t.cell(0, j).text = self.legend.columns[j]
+
+        for i in range(self.legend.shape[0]):
+            for j in range(self.legend.shape[-1]):
+                t.cell(i + 1, j).text = str(self.legend.values[i, j])
+
+        for row in t.rows:
+            for cell in row.cells:
+                paragraphs = cell.paragraphs
+                for paragraph in paragraphs:
+                    paragraph.paragraph_format.alignment = WD_TABLE_ALIGNMENT.CENTER
+                paragraphs = cell.paragraphs
+                for paragraph in paragraphs:
+                    for run in paragraph.runs:
+                        font = run.font
+                        if row.cells[1].text == ' ':
+                            font.bold = True
+                        font.size = Pt(6)
+
 
                     
     def center_text(self):
@@ -129,6 +152,5 @@ class redListFauna:
             
         
     def save(self):
-        print(self.outpath)
         self.doc.save(self.outpath)
         
