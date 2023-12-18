@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QFileDialog
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis._core import QgsProject
+from qgis._core import QgsProject, Qgis
 
 # Initialize Qt resources from file resources.py
 from .resources import *

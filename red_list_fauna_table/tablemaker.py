@@ -11,7 +11,6 @@ class redListFauna:
         self.fauna_layer = fauna_layer
         self.outpath = outpath
         self.basepath = os.path.dirname(os.path.realpath(__file__))
-        print(self.basepath)
         self.LUT = pd.read_csv(f"{self.basepath}/fauna.csv", sep='|')
         self.legend = pd.read_csv(f"{self.basepath}/legend.csv", sep='|')
         self.doc = docx.Document()
@@ -113,13 +112,15 @@ class redListFauna:
 
     def create_legend(self):
         self.doc.add_paragraph('')
+        self.legend.fillna('', inplace=True)
         t = self.doc.add_table(self.legend.shape[0] + 1, self.legend.shape[1])
         for j in range(self.legend.shape[-1]):
             t.cell(0, j).text = self.legend.columns[j]
 
         for i in range(self.legend.shape[0]):
             for j in range(self.legend.shape[-1]):
-                t.cell(i + 1, j).text = str(self.legend.values[i, j])
+                if '-' not in str(self.legend.values[i, j]):
+                    t.cell(i + 1, j).text = str(self.legend.values[i, j])
 
         for row in t.rows:
             for cell in row.cells:
@@ -127,7 +128,7 @@ class redListFauna:
                 for paragraph in paragraphs:
                     for run in paragraph.runs:
                         font = run.font
-                        if row.cells[1].text == ' ':
+                        if row.cells[1].text == 'Roten Liste Status':
                             font.bold = True
                         font.size = Pt(6)
                     paragraph.paragraph_format.alignment = WD_TABLE_ALIGNMENT.CENTER
