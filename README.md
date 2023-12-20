@@ -8,4 +8,4 @@ QGis plugin that creates a .docx table of fauna with various information that ar
 ![Plugin UI](img/output.png)
 
 # Installation
-Download the .zip file, then copy the "red_list_fauna_table" to your QGis plugin directory (Settings -> User profiles -> Open active profile folder -> python -> plugins).
+Download the .zip file, then copy the "red_list_fauna_table" folder to your QGis plugin directory (Settings -> User profiles -> Open active profile folder -> python -> plugins). Restart QGis.
