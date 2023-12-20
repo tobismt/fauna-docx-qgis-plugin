@@ -3,7 +3,7 @@ import docx
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from docx.shared import Pt
+from docx.shared import Pt, Cm
 import os
 
 class redListFauna:
@@ -64,6 +64,12 @@ class redListFauna:
             for j in range(self.df.shape[-1]):
                 t.cell(i+1,j).text = str(self.df.values[i,j])
 
+        for i, col in enumerate(t.columns):
+            if i == 0:
+                col.width = Cm(4)
+            else:
+                col.width = Cm(2.5)
+
     def color_cells(self, table):
         num = 0
         elems = []
@@ -122,13 +128,31 @@ class redListFauna:
                 if '-' not in str(self.legend.values[i, j]):
                     t.cell(i + 1, j).text = str(self.legend.values[i, j])
 
-        for row in t.rows:
+        t.alignment = WD_TABLE_ALIGNMENT.CENTER
+
+        t.autofit = False
+        t.allow_autofit = False
+        for col in t.columns:
+            col.width = Cm(1.75)
+
+        for i, row in enumerate(t.rows):
+            if i == 0:
+                row.cells[0].merge(row.cells[1])
+                row.cells[0].text = 'Rote Liste Status'
+                row.cells[2].merge(row.cells[3])
+                row.cells[3].text = 'Aktuelle Bestandssituation'
+                row.cells[4].merge(row.cells[5])
+                row.cells[5].text = 'Bestandstrend langfristig'
+                row.cells[6].merge(row.cells[7])
+                row.cells[7].text = 'Bestandstrend kurzfristig'
             for cell in row.cells:
+                if '-' in cell.text:
+                    cell.text = ''
                 paragraphs = cell.paragraphs
                 for paragraph in paragraphs:
                     for run in paragraph.runs:
                         font = run.font
-                        if row.cells[1].text == 'Roten Liste Status':
+                        if row.cells[0].text == 'Rote Liste Status':
                             font.bold = True
                         font.size = Pt(6)
                     paragraph.paragraph_format.alignment = WD_TABLE_ALIGNMENT.CENTER
