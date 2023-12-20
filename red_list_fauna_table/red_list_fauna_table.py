@@ -213,5 +213,5 @@ class RedListFaunaTable:
             layer = self.dlg.mMapLayerComboBox.currentLayer()
             redListFauna(layer, outpath)
 
-            self.iface.messageBar().pushMessage("Success", "Output file written at " + layer.name(), level=Qgis.Success,
+            self.iface.messageBar().pushMessage("Success", "Output file written at " + outpath, level=Qgis.Success,
                                                 duration=3)
