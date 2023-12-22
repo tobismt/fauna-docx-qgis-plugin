@@ -196,9 +196,6 @@ class RedListFaunaTable:
             self.first_start = False
             self.dlg = RedListFaunaTableDialog()
 
-        # Fetch the currently loaded layers
-        layers = QgsProject.instance().layerTreeRoot().children()
-
         self.dlg.pushButton.clicked.connect(self.select_output_file)
 
         # show the dialog
