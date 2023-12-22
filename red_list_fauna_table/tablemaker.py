@@ -7,9 +7,10 @@ from docx.shared import Pt, Cm
 import os
 
 class redListFauna:
-    def __init__(self, fauna_layer, outpath):
+    def __init__(self, fauna_layer, field, outpath):
         self.fauna_layer = fauna_layer
         self.outpath = outpath
+        self.field = field
         self.basepath = os.path.dirname(os.path.realpath(__file__))
         self.LUT = pd.read_csv(f"{self.basepath}/fauna.csv", sep='|')
         self.legend = pd.read_csv(f"{self.basepath}/legend.csv", sep='|')
@@ -46,8 +47,8 @@ class redListFauna:
 
 
     def create_df(self):
-        df = pd.DataFrame(self.list, columns = ['Name'])
-        merge = df.merge(self.LUT, how='left', left_on='Name', right_on='Name')
+        df = pd.DataFrame(self.list, columns = [self.field])
+        merge = df.merge(self.LUT, how='left', left_on=self.field, right_on='Name')
         merge = merge[['Name', 'Deutscher Name', 'aktuelle Bestandssituation', 'kurzfristiger Bestandstrend', 'langfristiger Bestandstrend', 'RL Kat.']]
         merge.columns = [i.title() for i in merge.columns]
         merge = merge.fillna('-')
@@ -56,7 +57,7 @@ class redListFauna:
         self.df = merge
 
     def df_to_word(self):
-        t = self.doc.add_table(self.df.shape[0]+1, self.df.shape[1])
+        t = self.doc.add_table(self.df.shape[0]+1, self.df.shape[1], style="Table Grid")
         for j in range(self.df.shape[-1]):
             t.cell(0,j).text = self.df.columns[j]
 
@@ -65,7 +66,7 @@ class redListFauna:
                 t.cell(i+1,j).text = str(self.df.values[i,j])
 
         for i, col in enumerate(t.columns):
-            if i == 0:
+            if i == 0 or i == 1:
                 col.width = Cm(4)
             else:
                 col.width = Cm(2.5)
@@ -119,7 +120,7 @@ class redListFauna:
     def create_legend(self):
         self.doc.add_paragraph('')
         self.legend.fillna('', inplace=True)
-        t = self.doc.add_table(self.legend.shape[0] + 1, self.legend.shape[1])
+        t = self.doc.add_table(self.legend.shape[0] + 1, self.legend.shape[1], style="Table Grid")
         for j in range(self.legend.shape[-1]):
             t.cell(0, j).text = self.legend.columns[j]
 

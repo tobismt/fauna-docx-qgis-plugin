@@ -25,7 +25,7 @@ from PyQt5.QtWidgets import QFileDialog
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
-from qgis._core import QgsProject, Qgis
+from qgis._core import QgsProject, Qgis, QgsFieldProxyModel, QgsMapLayerProxyModel
 
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -187,6 +187,12 @@ class RedListFaunaTable:
             self.dlg, "Select   output file ", "", '*.docx')
         self.dlg.lineEdit.setText(filename)
 
+    def select_field(self):
+        selectedLayer = self.dlg.mMapLayerComboBox.currentLayer()
+        if selectedLayer:
+            self.dlg.mFieldComboBox.setLayer(selectedLayer)
+            self.dlg.mFieldComboBox.setFilters(QgsFieldProxyModel.AllTypes)
+
     def run(self):
         """Run method that performs all the real work"""
 
@@ -195,6 +201,9 @@ class RedListFaunaTable:
         if self.first_start == True:
             self.first_start = False
             self.dlg = RedListFaunaTableDialog()
+            self.select_field()
+            self.dlg.mMapLayerComboBox.setFilters(QgsMapLayerProxyModel.PointLayer)
+            self.dlg.mMapLayerComboBox.layerChanged.connect(self.select_field)
 
         self.dlg.pushButton.clicked.connect(self.select_output_file)
 
@@ -208,7 +217,8 @@ class RedListFaunaTable:
             # substitute with your code.
             outpath = self.dlg.lineEdit.text()
             layer = self.dlg.mMapLayerComboBox.currentLayer()
-            redListFauna(layer, outpath)
+            field = self.dlg.mFieldComboBox.currentField()
+            redListFauna(layer, field, outpath)
 
             self.iface.messageBar().pushMessage("Success", "Output file written at " + outpath, level=Qgis.Success,
                                                 duration=3)
