@@ -33,4 +33,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     """
     #
     from .red_list_fauna_table import RedListFaunaTable
+
     return RedListFaunaTable(iface)
