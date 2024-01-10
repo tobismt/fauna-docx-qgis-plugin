@@ -66,7 +66,7 @@ class redListFauna:
 
         df = pd.DataFrame.from_records(data=datagen, columns=cols)
 
-        list = df.Name.unique()
+        list = df[self.field].unique()
         self.list = list
 
     def create_df(self):
@@ -74,7 +74,7 @@ class redListFauna:
         Create DataFrame with relevant fauna data for the specified field.
         """
         df = pd.DataFrame(self.list, columns=[self.field])
-        merge = df.merge(self.LUT, how="left", left_on=self.field, right_on="Name")
+        merge = df.merge(self.LUT, how="left", left_on=self.field, right_on="Deutscher Name")
         merge = merge[
             [
                 "Name",
