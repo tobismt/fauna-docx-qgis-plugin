@@ -4,7 +4,7 @@ QGis plugin that creates a .docx table of fauna with various information that ar
 # Installation
 1. Download the .zip file
 2. Copy the "red_list_fauna_table" folder to your QGis plugin directory (Settings -> User profiles -> Open active profile folder -> python -> plugins). 
-3. Open the Osgeo-shell and run ´pip install python-docx´
+3. Open the Osgeo-shell and run ``pip install python-docx``
 4. Restart QGis.
 
 ## The Plugin
