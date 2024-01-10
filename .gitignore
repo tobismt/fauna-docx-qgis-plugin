@@ -1,3 +1,5 @@
 
 *.pyc
 *.pyc
+.idea/misc.xml
+.idea/flora_docx_table.iml
