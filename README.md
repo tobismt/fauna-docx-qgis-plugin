@@ -7,6 +7,13 @@ QGis plugin that creates a .docx table of fauna with various information that ar
 3. Open the Osgeo-shell and run ``pip install python-docx``
 4. Restart QGis.
 
+## Usage
+1. Open Plugin
+2. Choose layer
+3. Choose fauna field
+4. Choose output path
+5. Press Ok
+
 ## The Plugin
 ![Plugin UI](img/plugin.png)
 
