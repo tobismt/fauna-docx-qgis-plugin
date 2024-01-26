@@ -107,12 +107,22 @@ class redListFauna:
             for j in range(self.df.shape[-1]):
                 t.cell(i + 1, j).text = str(self.df.values[i, j])
 
+        t.autofit = False
+        t.allow_autofit = False
+
         # Set column widths
-        for i, col in enumerate(t.columns):
-            if i == 0 or i == 1:
-                col.width = Cm(4)
-            else:
-                col.width = Cm(2.5)
+        for cell in t.columns[0].cells:
+            cell.width = Cm(4)
+        for cell in t.columns[1].cells:
+            cell.width = Cm(4)
+        for cell in t.columns[2].cells:
+            cell.width = Cm(2.5)
+        for cell in t.columns[3].cells:
+            cell.width = Cm(2.5)
+        for cell in t.columns[4].cells:
+            cell.width = Cm(2.5)
+        for cell in t.columns[5].cells:
+            cell.width = Cm(2.5)
 
     def color_cells(self, table):
         """
