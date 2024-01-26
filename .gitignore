@@ -1,7 +1,4 @@
-
-*.pyc
 *.pyc
 .idea/misc.xml
 .idea/flora_docx_table.iml
-*.pyc
-*.pyc
+__pycache__/
