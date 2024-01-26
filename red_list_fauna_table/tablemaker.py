@@ -107,6 +107,9 @@ class redListFauna:
             for j in range(self.df.shape[-1]):
                 t.cell(i + 1, j).text = str(self.df.values[i, j])
 
+        # Center table
+        t.alignment = WD_TABLE_ALIGNMENT.CENTER
+
         t.autofit = False
         t.allow_autofit = False
 
@@ -216,6 +219,7 @@ class redListFauna:
                 if "-" not in str(self.legend.values[i, j]):
                     t.cell(i + 1, j).text = str(self.legend.values[i, j])
 
+        # Center table
         t.alignment = WD_TABLE_ALIGNMENT.CENTER
 
         t.autofit = False
