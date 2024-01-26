@@ -215,7 +215,7 @@ class RedListFaunaTable:
             outpath = self.dlg.lineEdit.text()
             layer = self.dlg.mMapLayerComboBox.currentLayer()
             field = self.dlg.mFieldComboBox.currentField()
-            redListFauna(layer, field, outpath)
+            redListFauna(layer, field, outpath, self.iface)
 
             self.iface.messageBar().pushMessage(
                 "Success",

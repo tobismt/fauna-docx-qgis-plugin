@@ -1,5 +1,7 @@
 import pandas as pd
 import docx
+import qgis
+from PyQt5.QtWidgets import QProgressBar
 from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 from docx.enum.table import WD_TABLE_ALIGNMENT
@@ -8,7 +10,7 @@ import os
 
 
 class redListFauna:
-    def __init__(self, fauna_layer, field, outpath):
+    def __init__(self, fauna_layer, field, outpath, iface):
         """
         Constructor for the redListFauna class.
 
@@ -29,16 +31,31 @@ class redListFauna:
         )  # Legend for table colors
         self.doc = docx.Document()
 
+        self.progressMessageBar = qgis.utils.iface.messageBar()
+        progress = QProgressBar()
+        progress.setMaximum(8)
+
+        self.progressMessageBar.pushWidget(progress)
+
         self.get_arten_list(
             self.fauna_layer
         )  # Retrieve unique fauna names from the layer
+        progress.setValue(1)
         self.create_df()  # Create a DataFrame with relevant fauna data
+        progress.setValue(2)
         self.add_header()  # Add document header
+        progress.setValue(3)
         self.df_to_word()  # Convert DataFrame to Word table
+        progress.setValue(4)
         self.color_cells(self.doc.tables[0])  # Apply color to cells based on values
+        progress.setValue(5)
         self.center_text()  # Center-align text in the table
+        progress.setValue(6)
         self.create_legend()  # Add legend to the document
+        progress.setValue(7)
         self.save()  # Save the document
+        progress.setValue(8)
+        qgis.utils.iface.messageBar().clearWidgets()
 
     def add_header(self):
         """
