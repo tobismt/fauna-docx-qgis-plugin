@@ -215,11 +215,23 @@ class RedListFaunaTable:
             outpath = self.dlg.lineEdit.text()
             layer = self.dlg.mMapLayerComboBox.currentLayer()
             field = self.dlg.mFieldComboBox.currentField()
-            redListFauna(layer, field, outpath, self.iface)
-
-            self.iface.messageBar().pushMessage(
-                "Success",
-                "Output file written at " + outpath,
-                level=Qgis.Success,
-                duration=3,
-            )
+            for i in layer.fields():
+                if i.name() == field and i.typeName() == 'String':
+                    string = True
+                else:
+                    string = False
+            if string:
+                redListFauna(layer, field, outpath, self.iface)
+                self.iface.messageBar().pushMessage(
+                    "Success",
+                    "Output file written at " + outpath,
+                    level=Qgis.Success,
+                    duration=3,
+                )
+            else:
+                self.iface.messageBar().pushMessage(
+                    "Warning",
+                    "Please choose a string field as input.",
+                    level=Qgis.Warning,
+                    duration=3,
+                )
