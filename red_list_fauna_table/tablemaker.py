@@ -6,6 +6,7 @@ from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.shared import Pt, Cm
+from docx.enum.text import WD_BREAK
 import os
 
 
@@ -234,6 +235,9 @@ class redListFauna:
         """
         Add legend to the document.
         """
+
+        self.doc.add_page_break()
+
         self.doc.add_paragraph("")
         self.legend.fillna("", inplace=True)
         t = self.doc.add_table(
