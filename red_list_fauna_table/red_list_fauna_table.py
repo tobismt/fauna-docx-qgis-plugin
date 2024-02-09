@@ -221,7 +221,7 @@ class RedListFaunaTable:
                 else:
                     string = False
             if string:
-                redListFauna(layer, field, outpath, self.iface)
+                redListFauna(layer, field, outpath, self.dlg)
                 self.iface.messageBar().pushMessage(
                     "Success",
                     "Output file written at " + outpath,

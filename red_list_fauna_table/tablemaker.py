@@ -6,12 +6,11 @@ from docx.oxml import parse_xml
 from docx.oxml.ns import nsdecls
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.shared import Pt, Cm
-from docx.enum.text import WD_BREAK
 import os
 
 
 class redListFauna:
-    def __init__(self, fauna_layer, field, outpath, iface):
+    def __init__(self, fauna_layer, field, outpath, dlg):
         """
         Constructor for the redListFauna class.
 
@@ -23,6 +22,7 @@ class redListFauna:
         self.fauna_layer = fauna_layer
         self.outpath = outpath
         self.field = field
+        self.dlg = dlg
         self.basepath = os.path.dirname(os.path.realpath(__file__))
         self.LUT = pd.read_csv(
             f"{self.basepath}/fauna.csv", sep="|"
@@ -82,7 +82,10 @@ class redListFauna:
         - lyr: QgsVectorLayer, vector layer containing fauna data.
         """
         cols = [f.name() for f in lyr.fields()]
-        datagen = ([f[col] for col in cols] for f in lyr.getFeatures())
+        if self.dlg.checkBox_selection.isChecked():
+            datagen = ([f[col] for col in cols] for f in lyr.selectedFeatures())
+        else:
+            datagen = ([f[col] for col in cols] for f in lyr.getFeatures())
 
         df = pd.DataFrame.from_records(data=datagen, columns=cols)
 
