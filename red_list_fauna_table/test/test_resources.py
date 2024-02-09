@@ -8,14 +8,13 @@
 
 """
 
-__author__ = 'till.frankenbach@gmail.com'
-__date__ = '2023-12-15'
-__copyright__ = 'Copyright 2023, Till Frankenbach'
+__author__ = "till.frankenbach@gmail.com"
+__date__ = "2023-12-15"
+__copyright__ = "Copyright 2023, Till Frankenbach"
 
 import unittest
 
 from qgis.PyQt.QtGui import QIcon
-
 
 
 class RedListFaunaTableDialogTest(unittest.TestCase):
@@ -31,14 +30,12 @@ class RedListFaunaTableDialogTest(unittest.TestCase):
 
     def test_icon_png(self):
         """Test we can click OK."""
-        path = ':/plugins/RedListFaunaTable/icon.png'
+        path = ":/plugins/RedListFaunaTable/icon.png"
         icon = QIcon(path)
         self.assertFalse(icon.isNull())
+
 
 if __name__ == "__main__":
     suite = unittest.makeSuite(RedListFaunaTableResourcesTest)
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite)
-
-
-

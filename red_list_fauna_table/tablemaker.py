@@ -48,13 +48,17 @@ class redListFauna:
         progress.setValue(3)
         self.df_to_word()  # Convert DataFrame to Word table
         progress.setValue(4)
-        self.color_cells(self.doc.tables[0], 5)  # Apply color to cells based on values in main table
+        self.color_cells(
+            self.doc.tables[0], 5
+        )  # Apply color to cells based on values in main table
         progress.setValue(5)
         self.center_text()  # Center-align text in the table
         progress.setValue(6)
         self.create_legend()  # Add legend to the document
         progress.setValue(7)
-        self.color_cells(self.doc.tables[1], 0)  # Apply color to cells based on values in Legend
+        self.color_cells(
+            self.doc.tables[1], 0
+        )  # Apply color to cells based on values in Legend
         progress.setValue(8)
         self.save()  # Save the document
         progress.setValue(9)
@@ -82,6 +86,7 @@ class redListFauna:
         - lyr: QgsVectorLayer, vector layer containing fauna data.
         """
         cols = [f.name() for f in lyr.fields()]
+        # if selected only box is checked, only use selected features
         if self.dlg.checkBox_selection.isChecked():
             datagen = ([f[col] for col in cols] for f in lyr.selectedFeatures())
         else:
@@ -97,7 +102,9 @@ class redListFauna:
         Create DataFrame with relevant fauna data for the specified field.
         """
         df = pd.DataFrame(self.list, columns=[self.field])
-        merge = df.merge(self.LUT, how="left", left_on=self.field, right_on="Deutscher Name")
+        merge = df.merge(
+            self.LUT, how="left", left_on=self.field, right_on="Deutscher Name"
+        )
         merge = merge[
             [
                 "Name",

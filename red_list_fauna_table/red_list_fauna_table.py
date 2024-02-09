@@ -28,7 +28,7 @@ from qgis.PyQt.QtWidgets import QAction
 from qgis._core import Qgis, QgsFieldProxyModel, QgsMapLayerProxyModel
 
 # Initialize Qt resources from file resources.py
-from .resources import *  #noqa: F403
+from .resources import *  # noqa: F403
 
 # Import the code for the dialog
 from .red_list_fauna_table_dialog import RedListFaunaTableDialog
@@ -216,7 +216,7 @@ class RedListFaunaTable:
             layer = self.dlg.mMapLayerComboBox.currentLayer()
             field = self.dlg.mFieldComboBox.currentField()
             for i in layer.fields():
-                if i.name() == field and i.typeName() == 'String':
+                if i.name() == field and i.typeName() == "String":
                     string = True
                 else:
                     string = False
