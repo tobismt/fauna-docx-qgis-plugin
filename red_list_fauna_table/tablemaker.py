@@ -33,7 +33,7 @@ class redListFauna:
 
         self.progressMessageBar = qgis.utils.iface.messageBar()
         progress = QProgressBar()
-        progress.setMaximum(8)
+        progress.setMaximum(9)
 
         self.progressMessageBar.pushWidget(progress)
 
@@ -47,14 +47,16 @@ class redListFauna:
         progress.setValue(3)
         self.df_to_word()  # Convert DataFrame to Word table
         progress.setValue(4)
-        self.color_cells(self.doc.tables[0])  # Apply color to cells based on values
+        self.color_cells(self.doc.tables[0], 5)  # Apply color to cells based on values in main table
         progress.setValue(5)
         self.center_text()  # Center-align text in the table
         progress.setValue(6)
         self.create_legend()  # Add legend to the document
         progress.setValue(7)
-        self.save()  # Save the document
+        self.color_cells(self.doc.tables[1], 0)  # Apply color to cells based on values in Legend
         progress.setValue(8)
+        self.save()  # Save the document
+        progress.setValue(9)
         qgis.utils.iface.messageBar().clearWidgets()
 
     def add_header(self):
@@ -144,7 +146,7 @@ class redListFauna:
         for cell in t.columns[5].cells:
             cell.width = Cm(2.5)
 
-    def color_cells(self, table):
+    def color_cells(self, table, col):
         """
         Apply color to cells based on values in the table.
 
@@ -153,69 +155,80 @@ class redListFauna:
         """
         num = 0
         elems = []
-        for row in table.rows:
-            for cell in row.cells:
-                # Define cell colors based on cell values
-                if "0" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#3ec902"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "1" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#80c902"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "2" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#c9b202"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "3" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#a30202"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "G" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#fa7000"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "R" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#b300fa"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "V" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#2302c9"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "D" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#acacad"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "*" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="#acadad"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
-                if "♦" == cell.text:
-                    elems.append(
-                        parse_xml(r'<w:shd {} w:fill="9edd23"/>'.format(nsdecls("w")))
-                    )
-                    cell._tc.get_or_add_tcPr().append(elems[num])
-                    num += 1
+        for cell in table.columns[col].cells:
+            # Define cell colors based on cell values
+            if "0" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#3ec902"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "1" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#80c902"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "2" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#c9b202"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "3" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#a30202"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "G" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#fa7000"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "R" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#b300fa"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "V" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#2302c9"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "D" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#acacad"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "*" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="#acadad"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "♦" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="9edd23"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "nb" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="B6D6CC"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
+            if "kN" == cell.text:
+                elems.append(
+                    parse_xml(r'<w:shd {} w:fill="F1FEC6"/>'.format(nsdecls("w")))
+                )
+                cell._tc.get_or_add_tcPr().append(elems[num])
+                num += 1
 
     def create_legend(self):
         """
