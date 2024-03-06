@@ -25,7 +25,7 @@ This plugin simplifies the process of creating detailed wildlife tables, enhanci
 
 ## Results
 
-The plugin creates a fauna table, see Figure X, as output as intended, and the plugin therefore works as designed. The created table includes the scientific name as well as the common name in German language. Next the current population situation next to the short-term and the long-term population trend. Lastly and most importantly the red-list status or endangerment status is given. Additionally, a legend with all relevant information is situated on the last page of the document. For easier recognition the different red-list status information is colored, so the most important information is easily visible.
+The plugin creates a fauna table, see the figure below, as output as intended, and the plugin therefore works as designed. The created table includes the scientific name as well as the common name in German language. Next the current population situation next to the short-term and the long-term population trend. Lastly and most importantly the red-list status or endangerment status is given. Additionally, a legend with all relevant information is situated on the last page of the document. For easier recognition the different red-list status information is colored, so the most important information is easily visible.
 
 For the completion of this small research project, the creation of the plugin was successful. After some productive testing, the output table was optimized, and minor inconveniences were eliminated in the process.
 
